@@ -3,10 +3,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Game Collection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Game Launcher</title>
 </head>
 <body>
-    <h1>My Game Collection</h1>
-    <p>Welcome to my website!</p>
+    <h1>My Game Launcher</h1>
+    <p id="status">Loading your content...</p>
+    <div id="content"></div>
+
+    <script>
+        async function launch() {
+            const status = document.getElementById("status");
+
+            try {
+                const response = await fetch("./content.html");
+
+                if (!response.ok) {
+                    throw new Error("Content could not be loaded.");
+                }
+
+                const html = await response.text();
+
+                document.getElementById("content").innerHTML = html;
+                status.textContent = "Content loaded!";
+            } catch (error) {
+                status.textContent = error.message;
+            }
+        }
+
+        launch();
+    </script>
 </body>
 </html>
